@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/views/categories_page.dart';
 import 'package:food_app/views/chatbot_page.dart';
 import 'package:food_app/views/chat_screen_page.dart';
+import 'package:food_app/views/home_page_category.dart';
 import 'package:food_app/views/profile_page.dart';
 import '../meal_suggestion_page.dart';
 import '../services/auth/auth_services.dart';
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     List<Widget> _pages = [
       ChatbotPage(),
 
-      CategoriesPage(),
+      HomePageCategory(),
       HomePage2(), // Sohbet sayfasını buraya ekleyin
       ProfilePage(),
     ];
