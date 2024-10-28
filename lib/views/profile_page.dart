@@ -13,10 +13,7 @@ class ProfilePage extends StatelessWidget {
         title: Text('Profilim'),
         backgroundColor: Colors.black12, // Kahverengi tonlarında AppBar
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => _signOut(context),
-          ),
+
         ],
       ),
       body: StreamBuilder(
@@ -153,15 +150,5 @@ class ProfilePage extends StatelessWidget {
     });
   }
 
-  void _signOut(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context)=>LoginScreen())); // veya uygun olan rota
-    } catch (e) {
-      print('Çıkış yapma hatası: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Çıkış yaparken bir hata oluştu.')),
-      );
-    }
-  }
+
 }
