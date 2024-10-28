@@ -63,7 +63,7 @@ class _CategoryListState extends State<CategoryList> {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 16.0),
           child: Card(
-            color: Colors.orangeAccent, // Renk burada sabitlendi
+            color: Colors.orange[100], // Renk burada sabitlendi
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0), // Kartlara kenar yuvarlama
             ),

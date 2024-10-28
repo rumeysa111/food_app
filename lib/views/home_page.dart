@@ -1,6 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/views/categories_page.dart';
 import 'package:food_app/views/chatbot_page.dart';
 import 'package:food_app/views/chat_screen_page.dart';
 import 'package:food_app/views/home_page_category.dart';

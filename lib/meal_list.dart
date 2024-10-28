@@ -40,7 +40,7 @@ class _MealListState extends State<MealList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.categoryName} Yemekleri'),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.orange,
         elevation: 0,
       ),
       body: Padding(

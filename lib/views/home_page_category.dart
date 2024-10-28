@@ -7,7 +7,10 @@ class HomePageCategory extends StatelessWidget {
     return MaterialApp(
       title: 'Yemek Tarifi Uygulaması',
       home: Scaffold(
-        appBar: AppBar(title: Text('Ne Öğrenmek İstiyorsun?👨🏾‍🍳🍨')),
+        appBar: AppBar(
+          title: Text('Ne Öğrenmek İstiyorsun?👨🏾‍🍳🍨'),
+          backgroundColor: Colors.orange, // AppBar rengi turuncu tonu
+        ),
         body: CategoryList(), // Kategori listesini burada çağırın
       ),
     );
