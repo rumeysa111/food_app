@@ -25,14 +25,19 @@ class _ChatbotPageState extends State<ChatbotPage> {
     profileImage:
     "https://seeklogo.com/images/G/google-gemini-logo-A5787B2669-seeklogo.com.png",
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Gemini Chat",
+          "Gemini",
+          style: TextStyle(
+            color: Colors.white, // Başlık rengi beyaz
+          ),
         ),
+        backgroundColor: Colors.orange, // Arka plan rengi turuncu
       ),
       body: _buildUI(),
     );
@@ -43,9 +48,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
       inputOptions: InputOptions(trailing: [
         IconButton(
           onPressed: _sendMediaMessage,
-          icon: const Icon(
-            Icons.image,
-          ),
+          icon: const Icon(Icons.image),
         )
       ]),
       currentUser: currentUser,
@@ -66,12 +69,10 @@ class _ChatbotPageState extends State<ChatbotPage> {
           File(chatMessage.medias!.first.url).readAsBytesSync(),
         ];
       }
-      gemini
-          .streamGenerateContent(
+      gemini.streamGenerateContent(
         question,
         images: images,
-      )
-          .listen((event) {
+      ).listen((event) {
         ChatMessage? lastMessage = messages.firstOrNull;
         if (lastMessage != null && lastMessage.user == geminiUser) {
           lastMessage = messages.removeAt(0);
@@ -79,11 +80,9 @@ class _ChatbotPageState extends State<ChatbotPage> {
               "", (previous, current) => "$previous ${current.text}") ??
               "";
           lastMessage.text += response;
-          setState(
-                () {
-              messages = [lastMessage!, ...messages];
-            },
-          );
+          setState(() {
+            messages = [lastMessage!, ...messages];
+          });
         } else {
           String response = event.content?.parts?.fold(
               "", (previous, current) => "$previous ${current.text}") ??
@@ -118,7 +117,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
             url: file.path,
             fileName: "",
             type: MediaType.image,
-          )
+          ),
         ],
       );
       _sendMessage(chatMessage);
