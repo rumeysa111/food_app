@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
       HomePageCategory(),
       HomePage2(), // Sohbet sayfasını buraya ekleyin
-      ProfilePage(),
+      ProfileScreen(),
     ];
 
     return Scaffold(

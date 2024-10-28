@@ -1,154 +1,218 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// profile_screen.dart
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
-import 'login_screen.dart';
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
 
-class ProfilePage extends StatelessWidget {
+class _ProfileScreenState extends State<ProfileScreen> {
+  List recipes = [];
+  bool isLoading = true;
+  final String apiKey = '0725eb2bb23b48409fc367e5521514af'; // Senin API anahtarın
+  List<TextEditingController> _commentControllers = [];
+  List<int> selectedStars = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRecipes();
+  }
+
+  Future<void> fetchRecipes() async {
+    setState(() {
+      isLoading = true;
+    });
+    final response = await http.get(
+      Uri.parse(
+        'https://api.spoonacular.com/recipes/random?apiKey=$apiKey&number=2',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        recipes = data['recipes'].map((recipe) {
+          return {
+            'title': recipe['title'],
+            'image': recipe['image'],
+            'comment': '',
+          };
+        }).toList();
+        _commentControllers =
+            List.generate(recipes.length, (_) => TextEditingController());
+        selectedStars = List.generate(recipes.length, (_) => 0);
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profilim'),
-        backgroundColor: Colors.black12, // Kahverengi tonlarında AppBar
-        actions: [
-
-        ],
+        backgroundColor: Colors.orangeAccent,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FaIcon(FontAwesomeIcons.bell, size: 28),
+            SizedBox(width: 30),
+            FaIcon(FontAwesomeIcons.user, size: 28),
+            SizedBox(width: 30),
+            FaIcon(FontAwesomeIcons.envelope, size: 28),
+          ],
+        ),
+        actions: [Container()],
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('coffee_selections').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Hata: ${snapshot.error}'));
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('Henüz kahve seçimi yapılmadı.'));
-          }
-
-          // Kahve seçimlerini listelemeden önce filtreleme
-          var coffeeSelections = snapshot.data!.docs.map((doc) {
-            var data = doc.data() as Map<String, dynamic>;
-            return {
-              'id': doc.id,
-              'coffee': data['coffee'],
-              'rating': data['rating'] ?? 0.0,
-            };
-          }).toList();
-
-          // Aynı kahve adını birden fazla listelememek için filtreleme
-          var uniqueSelections = <String, Map<String, dynamic>>{};
-          for (var selection in coffeeSelections) {
-            uniqueSelections[selection['coffee']] = selection;
-          }
-
-          var filteredSelections = uniqueSelections.values.toList();
-
-          return Column(
-            children: [
-              // Kullanıcı bilgilerini ve avatarı gösterecek kısım
-              FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Hata: ${snapshot.error}'));
-                  }
-                  if (!snapshot.hasData || !snapshot.data!.exists) {
-                    return Center(child: Text('Kullanıcı bilgileri bulunamadı.'));
-                  }
-
-                  var userData = snapshot.data!.data() as Map<String, dynamic>;
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                'Denediğim Tarifler',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orangeAccent,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 20),
+            isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Expanded(
+              child: ListView.builder(
+                itemCount: recipes.length,
+                itemBuilder: (context, index) {
+                  return Center(
+                    child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: AssetImage('assets/images/user.png'),
-                          backgroundColor: Colors.grey[200],
+                        Image.network(
+                          recipes[index]['image'],
+                          height: 150,
+                          width: 150,
+                          fit: BoxFit.cover,
                         ),
-                        SizedBox(width: 16),
+                        SizedBox(height: 10),
                         Text(
-                          '${userData['first_name'] ?? 'Ad'} ${userData['last_name'] ?? 'Soyad'}',
+                          recipes[index]['title'],
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.brown[800],
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 5),
+                        buildStarRow(index),
+                        SizedBox(height: 5),
+                        if (recipes[index]['comment'].isNotEmpty)
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 30),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              recipes[index]['comment'],
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller:
+                                  _commentControllers[index],
+                                  decoration: InputDecoration(
+                                    hintText: 'Yorumunuzu yazın...',
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    recipes[index]['comment'] =
+                                        _commentControllers[index]
+                                            .text;
+                                    _commentControllers[index].clear();
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orangeAccent,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                ),
+                                child: Text('Gönder'),
+                              ),
+                            ],
                           ),
                         ),
+                        SizedBox(height: 30),
                       ],
                     ),
                   );
                 },
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'En son değerlendirilen kahveler',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown[800],
-                        ),
-                      ),
-                    ),
-                    ...filteredSelections.map((selection) {
-                      return Card(
-                        color: Colors.brown[50], // Açık kahverengi tonlarında kart rengi
-                        elevation: 3, // Kart yüksekliğini küçültme
-                        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4), // Marjinleri küçültme
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(8), // Padding ekleme
-                          title: Text(
-                            selection['coffee'],
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16), // Font boyutunu küçültme
-                          ),
-                          subtitle: RatingBar.builder(
-                            initialRating: selection['rating'],
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 2.0), // Item padding küçültme
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            onRatingUpdate: (rating) {
-                              _updateRating(selection['id'], rating);
-                            },
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ],
+            ),
+            Spacer(),
+            Center(
+              child: ElevatedButton(
+                onPressed: fetchRecipes,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orangeAccent,
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                ),
+                child: Text(
+                  'Tarif Ekle',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ],
-          );
-        },
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
 
-  void _updateRating(String id, double rating) {
-    FirebaseFirestore.instance.collection('coffee_selections').doc(id).update({
-      'rating': rating,
-    }).then((_) {
-      print('Değerlendirme güncellendi: $rating');
-    }).catchError((error) {
-      print('Değerlendirme güncellenemedi: $error');
-    });
+  Row buildStarRow(int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(5, (i) {
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedStars[index] = i + 1;
+            });
+          },
+          child: Icon(
+            Icons.star,
+            color: i < selectedStars[index] ? Colors.orangeAccent : Colors.grey,
+            size: 24.0,
+          ),
+        );
+      }),
+    );
   }
-
-
 }
