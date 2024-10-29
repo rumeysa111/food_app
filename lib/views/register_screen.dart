@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import '../components/my_button.dart';
 import '../components/my_textfield.dart';
 import '../services/auth/auth_services.dart';
+import 'home_page.dart';
 
 class RegisterScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
+  final GoogleSignInProvider _googleSignInProvider = GoogleSignInProvider();
+
   final void Function()? onTap;
 
    RegisterScreen({super.key, this.onTap});
@@ -16,42 +19,48 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.orange[100],
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //logo
-          Icon(
-            Icons.message,
-            size: 60,
-            color: Theme.of(context).colorScheme.primary,
+
+          const SizedBox(
+            height: 50,
+          ),
+          Text(
+            "Hesap Oluşturun",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
           const SizedBox(
             height: 50,
           ),
-          Text("Uygulamamıza kayıt olun."),
-          const SizedBox(
-            height: 25,
-          ),
+
           //email textfield
           MyTextfield(
-            hintText: "Email",
+            label: "E posta",
+            hintText: "E postanızı giriniz",
             obsureText: false,
             controller: _emailController,
           ),
           const SizedBox(
-            height: 10.0,
+            height: 25.0,
           ),
           MyTextfield(
-            hintText: "Password",
+            label: "Şifre",
+            hintText: "Şİfre",
             obsureText: true,
             controller: _pwController,
           ),
           const SizedBox(
-            height: 10,
+            height: 25,
           ),
           MyTextfield(
-            hintText: " Confirm Password",
+            label: "Şifre Tekrarı",
+            hintText: " Şifreyi Tekrar giriniz",
             obsureText: true,
             controller: _confirmPwController,
           ),
@@ -67,16 +76,43 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(
             height: 25,
           ),
+          // Google ile Giriş Yap Butonu
+          ElevatedButton.icon(
+            icon: Image.asset('assets/images/google_logo.png',height: 24,),
+            label: Text("Google ile Giriş Yap",style: TextStyle(color: Colors.black),),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            onPressed: () async {
+              final user = await _googleSignInProvider.signInWithGoogle();
+              if (user != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Giriş Başarısız"),
+                    content: Text("Google ile giriş yapılamadı."),
+                  ),
+                );
+              }
+            },
+          ),
+          const SizedBox(
+            height: 25,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Zaten hesabın var mı? ",
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Colors.black87),
               ),
               GestureDetector(
                 onTap: onTap,
                 child: Text("Login now",
                   style: TextStyle(
+                    color: Colors.blueAccent,
                       fontWeight: FontWeight.bold
                   ),
                 ),

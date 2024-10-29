@@ -46,6 +46,7 @@ class ChatService {
         .collection("messages")
         .add(newMessage.toMap());
   }
+
   //Grup oluşturma
   Future<void> createGroup(String groupName, List<String> users) async {
     // Yeni grup oluştur
@@ -83,24 +84,14 @@ class ChatService {
     Messages newMessage = Messages(
       senderId: currentUserId,
       senderEmail: currentUserEmail,
-      groupId: groupId,
+
       message: message,
       timestamp: timestamp,
     );
 
-    // Veritabanına grup mesajını ekleyin
-    await _firestore
-        .collection("groups")
-        .doc(groupId)
-        .collection("messages")
-        .add(newMessage.toMap());
+
   }
-  // Grupları al
-  Stream<List<Map<String, dynamic>>> getGroupsStream() {
-    return _firestore.collection('groups').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => doc.data()).toList();
-    });
-  }
+
   //get messages
   Stream<QuerySnapshot> getMessages(String userID, otherUserID) {
     //construct a chatroom ıd for the two users

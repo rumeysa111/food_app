@@ -31,7 +31,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.recieverEmail)),
+      appBar: AppBar(title: Text(widget.recieverEmail),
+      backgroundColor: Colors.orange,),
+
       body: Column(
         children: [
           Expanded(child: _buildMessageList()),
@@ -83,14 +85,15 @@ ChatBubble(message: data["message"], isCurrentUser: isCurrentUser)          ],
         children: [
           Expanded(
             child: MyTextfield(
-              hintText: "Type a message",
+              label: "Mesaj Gönder",
+              hintText: "Mesaj yazınız",
               obsureText: false,
               controller: _messageController,
             ),
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Colors.orangeAccent,
               shape: BoxShape.circle
             ),
             margin:  const EdgeInsets.only(right: 25),

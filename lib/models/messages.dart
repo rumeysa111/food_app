@@ -6,14 +6,14 @@ class Messages{
   final String? receiverId;
   final String message;
   final Timestamp timestamp;
-  final String? groupId;
+
   Messages({
     required this.senderId,
     required this.senderEmail,
     this.receiverId,
     required this.message,
     required this.timestamp,
-    this.groupId,
+
 });
   //convert to a map
 Map<String,dynamic> toMap(){
@@ -23,7 +23,7 @@ Map<String,dynamic> toMap(){
     'receiverId':receiverId,
     'message':message,
     'timestamp':timestamp,
-    'groupId':groupId
+
   };
 }
 

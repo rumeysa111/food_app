@@ -4,8 +4,15 @@ class MyTextfield extends StatelessWidget {
   final String hintText;
   final bool obsureText;
   final TextEditingController controller;
+  final String label;
 
-  const MyTextfield({super.key, required this.hintText, required this.obsureText, required this.controller});
+  const MyTextfield({
+    super.key,
+    required this.hintText,
+    required this.obsureText,
+    required this.controller,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +22,28 @@ class MyTextfield extends StatelessWidget {
         obscureText: obsureText,
         controller: controller,
         decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
+          labelText: label,
+          labelStyle: TextStyle(
+            color: Colors.black87,
+            fontSize: 20,
 
-          ),focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
-        ),
-          fillColor: Colors.orange,
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always, // Etiket her zaman yukarıda kalacak
+          enabledBorder: OutlineInputBorder(
+
+            borderSide: BorderSide(color: Colors.black87),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black87),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          fillColor: Colors.white70,
           filled: true,
-          hintText:hintText,
-          hintStyle: TextStyle(color: Colors.black),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: Colors.grey
+          ),
         ),
       ),
     );

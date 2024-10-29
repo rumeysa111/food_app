@@ -9,6 +9,7 @@ import '../services/auth/auth_services.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
+  final GoogleSignInProvider _googleSignInProvider = GoogleSignInProvider();
 
 
   final void Function()? onTap;
@@ -19,34 +20,33 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.orange[100], // Açık turuncu arka plan
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //logo
-          Icon(
-            Icons.message,
-            size: 60,
-            color: Theme.of(context).colorScheme.primary,
+          Text(
+            "Hoşgeldiniz!",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-          const SizedBox(
-            height: 50,
-          ),
-          Text("Hoşgeldiniz uygulamaya giriş yapın"),
-          const SizedBox(
-            height: 25,
-          ),
+
+          const SizedBox(height: 30),
           //email textfield
           MyTextfield(
-            hintText: "Email",
+            label: "E posta",
+            hintText: "E postanızı giriniz",
             obsureText: false,
             controller: _emailController,
           ),
           const SizedBox(
-            height: 10.0,
+            height: 25.0,
           ),
           MyTextfield(
-            hintText: "Password",
+            label: "Şifre",
+            hintText: "Şifreyi giriniz",
             obsureText: true,
             controller: _pwController,
           ),
@@ -59,19 +59,44 @@ class LoginScreen extends StatelessWidget {
             text: "Oturum Aç",
             onTap:() =>login(context),
           ),
+          const SizedBox(height: 25),
+          // Google ile Giriş Yap Butonu
+          ElevatedButton.icon(
+            icon: Image.asset('assets/images/google_logo.png',height: 24,),
+            label: Text("Google ile Giriş Yap",style: TextStyle(color: Colors.black),),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            onPressed: () async {
+              final user = await _googleSignInProvider.signInWithGoogle();
+              if (user != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Giriş Başarısız"),
+                    content: Text("Google ile giriş yapılamadı."),
+                  ),
+                );
+              }
+            },
+          ),
           const SizedBox(
             height: 25,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Not a member? ",
-                style: TextStyle(color: Colors.blue),
+              Text("Üye değil misin ? ",
+                style: TextStyle(color: Colors.black),
               ),
               GestureDetector(
                 onTap: onTap,
-                child: Text("Register now",
-                  style: TextStyle(
+                child: Text("Kayıt Ol",
+                  style:TextStyle(
+                    color:Colors.blueAccent ,
                     fontWeight: FontWeight.bold
                   ),
                 ),
