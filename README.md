@@ -14,6 +14,9 @@ Upcoming Group Chat Feature: A group chat option will soon be available, allowin
 # Screenshots
 
 <p align="center">
+    <a href="https://github.com/user-attachments/assets/cdfb757c-c131-4d96-ad52-dd4125597db5">
+    <img src="https://github.com/user-attachments/assets/cdfb757c-c131-4d96-ad52-dd4125597db5" width="300" alt="Recipe Details">
+  </a>
   <a href="https://github.com/user-attachments/assets/9059999a-e88c-4362-ad26-9f68438eddee">
     <img src="https://github.com/user-attachments/assets/9059999a-e88c-4362-ad26-9f68438eddee" width="300" alt="Home Screen">
   </a>
@@ -41,9 +44,7 @@ Upcoming Group Chat Feature: A group chat option will soon be available, allowin
   <a href="https://github.com/user-attachments/assets/a2b3b2f1-b127-4096-870c-61c05a087c64">
     <img src="https://github.com/user-attachments/assets/a2b3b2f1-b127-4096-870c-61c05a087c64" width="300" alt="Favorite Recipes">
   </a>
-  <a href="https://github.com/user-attachments/assets/cdfb757c-c131-4d96-ad52-dd4125597db5">
-    <img src="https://github.com/user-attachments/assets/cdfb757c-c131-4d96-ad52-dd4125597db5" width="300" alt="Recipe Details">
-  </a>
+
 </p>
 
 
