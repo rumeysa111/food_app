@@ -10,12 +10,15 @@ Advanced Search and Filtering: Search recipes by type, preparation time, and dif
 User-to-User Messaging: Registered users can send direct messages to each other, creating a community for sharing cooking ideas and tips.
 Upcoming Group Chat Feature: A group chat option will soon be available, allowing users to form groups for cooking discussions, recipe sharing, and real-time culinary learning.
 
-![WhatsApp Image 2024-10-31 at 20 48 51_49392eda](https://github.com/user-attachments/assets/95e90a30-6543-4589-a512-9b16da99ce76)![WhatsApp Image 2024-10-31 at 20 48 53_d43a265e](https://github.com/user-attachments/assets/6dc37dc2-c5e6-42ba-8084-f9b2fd441a38)
 
-![WhatsApp Image 2024-10-31 at 20 48 52_3dada864](https://github.com/user-![WhatsApp Image 2024-10-31 at 20 48 53_a1002f17](https://github.com/user-attachments/assets/5e5e958e-7bd5-444f-8c9f-0ef169bd3f97)
-attachments/assets/bd1d81d3-95d4-4f2a-8f46-9473c47c4b26)
-![WhatsApp Image 2024-10-31 at 20 48 52_14da0332](https://github.com/user-![WhatsApp Image 2024-10-31 at 20 48 53_32a66039](https://github.com/user-attachments/assets/a2b6d19c-0fd4-4f60-a4f8-77a0a075abb8)
-attachments/assets/155a17aa-9501-4297-9657-5b40cf4ef91f)
-![WhatsApp Image 2024-10-31 at 20 48 52_4011ab0d](https://github.com/user-attachments/assets/a1d63903-b532-4bf4-8920-286c016f9fa6)![WhatsApp Image 2024-10-31 at 20 48 52_fe9e0400](https://github.com/user-attachments/assets/0882897c-3eb8-4059-8655-a340356e8![WhatsApp Image 2024-10-31 at 20 48 53_8deeb176](https://github.com/user-attachments/assets/e79dac1d-a452-4dc6-8417-b52db0a59665)
-39e)
+![WhatsApp Image 2024-11-02 at 23 56 45_dbdee35f](https://github.com/user-attachments/assets/9059999a-e88c-4362-ad26-9f68438eddee)
+![WhatsApp Image 2024-10-31 at 20 48 53_d43a265e](https://github.com/user-attachments/assets/361057cb-c2e7-497c-be39-18c8152e6d20)
+![WhatsApp Image 2024-10-31 at 20 48 53_a1002f17](https://github.com/user-attachments/assets/958304b7-ac7f-42f7-ba6a-054683bf0d5d)
+![WhatsApp Image 2024-10-31 at 20 48 53_32a66039](https://github.com/user-attachments/assets/61539ca3-3184-4090-a5e1-467d1320fec9)
+![WhatsApp Image 2024-10-31 at 20 48 53_8deeb176](https://github.com/user-attachments/assets/3e6e7a41-23df-4ff3-8e99-c791056fd816)
+![WhatsApp Image 2024-10-31 at 20 48 52_fe9e0400](https://github.com/user-attachments/assets/27e16603-3407-4fe4-ac7d-027590baf6cd)
+![WhatsApp Image 2024-10-31 at 20 48 52_4011ab0d](https://github.com/user-attachments/assets/c24d9b08-5772-4a5b-9354-b818a526ead1)
+![WhatsApp Image 2024-10-31 at 20 48 52_14da0332](https://github.com/user-attachments/assets/39bbaa7b-cdb7-4819-af25-d263369c933e)
+![WhatsApp Image 2024-10-31 at 20 48 52_3dada864](https://github.com/user-attachments/assets/a2b3b2f1-b127-4096-870c-61c05a087c64)
+![WhatsApp Image 2024-10-31 at 20 48 51_49392eda](https://github.com/user-attachments/assets/cdfb757c-c131-4d96-ad52-dd4125597db5)
 
